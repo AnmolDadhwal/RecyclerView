@@ -6,32 +6,33 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvName"
+        android:id="@+id/tvTitle"
         android:textSize="@dimen/sp_20"
         android:layout_margin="@dimen/dp_10"
-        android:text="@string/item_name"
+        android:text="@string/title"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etName"
+        android:id="@+id/etTitle"
+        android:inputType="text"
         android:layout_margin="@dimen/dp_10"
-        android:hint="@string/item_name"/>
+        android:hint="@string/title"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvQty"
+        android:id="@+id/tvDesc"
         android:textSize="@dimen/sp_20"
         android:layout_margin="@dimen/dp_10"
-        android:text="@string/enter_quantity"
+        android:text="@string/description"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etQty"
-        android:inputType="number"
+        android:id="@+id/etDesc"
+        android:inputType="text"
         android:layout_margin="@dimen/dp_10"
-        android:hint="@string/enter_quantity"/>
+        android:hint="@string/description"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_40"

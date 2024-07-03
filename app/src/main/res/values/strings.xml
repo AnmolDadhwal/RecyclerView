@@ -3,4 +3,6 @@
     <string name="item_name">Name</string>
     <string name="enter_quantity">Number\n</string>
     <string name="add">Add</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 </resources>
