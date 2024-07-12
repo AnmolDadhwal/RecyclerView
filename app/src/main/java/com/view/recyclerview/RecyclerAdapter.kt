@@ -31,7 +31,7 @@ class RecyclerAdapter(var informationList:ArrayList<Information>,var recyclerInt
         holder.btnRemove.setOnClickListener {
             recyclerInterface.remove(position)
         }
-        holder.btnUpdate.setOnClickListener {
+        holder.btnUpdate.setOnClickListener{
             recyclerInterface.update(position)
         }
     }

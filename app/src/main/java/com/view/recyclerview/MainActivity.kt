@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), RecyclerInterface {
     var informationList= arrayListOf<Information>()
     var recyclerAdapter=RecyclerAdapter(informationList,this)
     lateinit var linearLayoutManager:LinearLayoutManager
+    var todoDatabase: TodoDatabase?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity(), RecyclerInterface {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        todoDatabase=TodoDatabase.getInstance(this)
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView?.layoutManager = linearLayoutManager
         binding?.recyclerView?.adapter = recyclerAdapter
@@ -43,13 +45,15 @@ class MainActivity : AppCompatActivity(), RecyclerInterface {
                 }else if (dialogBinding.etDesc.text?.toString()?.trim().isNullOrEmpty()){
                     dialogBinding.etDesc.error="Enter Description"
                 }else{
-                    informationList.add(Information(dialogBinding.etTitle.text.toString(),dialogBinding.etDesc.text.toString()))
+                    todoDatabase?.todoInterface()?.insertTodo(Information(title = dialogBinding.etTitle.text.toString(), description = dialogBinding.etDesc.text.toString()))
+                    getData()
                     recyclerAdapter.notifyDataSetChanged()
                     dialog.dismiss()
                 }
             }
             dialog.show()
         }
+        getData()
     }
     override fun remove(position: Int) {
         AlertDialog.Builder(this@MainActivity).apply {
@@ -60,8 +64,9 @@ class MainActivity : AppCompatActivity(), RecyclerInterface {
                 setCancelable(true)
             }
             setNegativeButton("Yes") { _, _ ->
-                informationList.removeAt(position)
+                todoDatabase?.todoInterface()?.deleteTodoEntity(informationList[position])
                 recyclerAdapter.notifyDataSetChanged()
+                getData()
             }
             show()
         }
@@ -85,11 +90,21 @@ class MainActivity : AppCompatActivity(), RecyclerInterface {
             }else if (dialogBinding.etDesc.text?.toString()?.trim().isNullOrEmpty()){
                 dialogBinding.etDesc.error="Enter Description"
             }else{
-                informationList.set(position,Information(dialogBinding.etTitle.text?.toString(),dialogBinding.etDesc.text?.toString()?.trim()))
+                todoDatabase?.todoInterface()?.updateTodoEntity(Information(
+                    id = informationList[position].id,
+                    title = dialogBinding.etTitle.text.toString(),
+                    description = dialogBinding.etDesc.text.toString()))
+//              informationList.set(position,Information(title = dialogBinding.etTitle.text?.toString(), description = dialogBinding.etDesc.text?.toString()?.trim()))
                 recyclerAdapter.notifyDataSetChanged()
+                getData()
                 dialog.dismiss()
             }
         }
         dialog.show()
+    }
+    fun getData(){
+        informationList.clear()
+        informationList.addAll(todoDatabase?.todoInterface()?.getList()?: arrayListOf() )
+        recyclerAdapter.notifyDataSetChanged()
     }
 }
