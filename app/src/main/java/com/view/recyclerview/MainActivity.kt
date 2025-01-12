@@ -94,7 +94,6 @@ class MainActivity : AppCompatActivity(), RecyclerInterface {
                     id = informationList[position].id,
                     title = dialogBinding.etTitle.text.toString(),
                     description = dialogBinding.etDesc.text.toString()))
-//              informationList.set(position,Information(title = dialogBinding.etTitle.text?.toString(), description = dialogBinding.etDesc.text?.toString()?.trim()))
                 recyclerAdapter.notifyDataSetChanged()
                 getData()
                 dialog.dismiss()
